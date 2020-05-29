@@ -7,6 +7,10 @@ class Strapi {
 
   static final Strapi _instance = Strapi._constructor();
 
+  static Strapi newClient() {
+    return Strapi._constructor();
+  }
+
   factory Strapi() {
     return _instance;
   }
@@ -19,15 +23,49 @@ class Strapi {
 
   void initialize({
     String base_url = 'http://localhost:1337',
+    String token = '',
   }) {
     _base_url = base_url;
+    _httpClient.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (RequestOptions options) async {
+          if (token.isNotEmpty) {
+            options.headers.putIfAbsent('Authorization', () => 'Bearer $token');
+          }
+          return options;
+        },
+      ),
+    );
   }
 
   final _httpClient = Dio();
 
-  Future<List<ContentType>> find(String contentType) async {
+  /// ```json
+  /// {
+  ///   "prop": "value",
+  ///   "prop_limit": "integer",
+  ///   "prop_sort": "string",
+  ///   "prop_start": "integer",
+  ///   "prop_ne": "string",
+  ///   "prop_lt": "string",
+  ///   "prop_lte": "string",
+  ///   "prop_gt": "string",
+  ///   "prop_gte": "string",
+  ///   "prop_contains": "string",
+  ///   "prop_containss": "string",
+  ///   "prop_in": "array[string]",
+  ///   "prop_nin": "array[string]"
+  /// }
+  /// ```
+  Future<List<ContentType>> find(
+    String contentType, {
+    Map<String, dynamic> queryParameters = const {},
+  }) async {
     return await tryOrNullAsync(() async {
-      final response = await _httpClient.get('$_base_url/$contentType');
+      final response = await _httpClient.get(
+        '$_base_url/$contentType',
+        queryParameters: queryParameters,
+      );
       final List<dynamic> list = response.data;
       final parsed = list.map(
         (item) => ContentType.fromMap(contentType, item),

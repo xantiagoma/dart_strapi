@@ -1,10 +1,10 @@
 name: dart_strapi
 description: A starting point for Dart libraries or applications.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/xantiagoma/dart_strapi
 
 environment:
-  sdk: '>=2.7.0 <3.0.0'
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   dio: ^3.0.8

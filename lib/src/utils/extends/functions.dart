@@ -11,7 +11,8 @@ T tryOrNull<T>(T Function() callback) {
 Future<T> tryOrNullAsync<T>(FutureOr<T> Function() callback) async {
   try {
     return await callback();
-  } catch (_) {
+  } catch (e) {
+    print(e);
     return null;
   }
 }

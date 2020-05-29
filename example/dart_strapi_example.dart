@@ -1,11 +1,14 @@
 import 'package:dart_strapi/dart_strapi.dart';
 
 void main() async {
-  final strapiClient = Strapi();
-  strapiClient.initialize();
+  final strapiClient = Strapi.newClient();
+  strapiClient.initialize(token: 'token');
 
-  final x4 = await strapiClient.deleteById('stations', 4.toString());
-  print('Delete 4: $x4');
-  final count = await strapiClient.count('stations');
-  print('Count: $count');
+  final records = await strapiClient.find('record', queryParameters: {
+    'amount_gt': 90,
+  });
+
+  final list = records.map((e) => e.toMap()).toList();
+
+  print('$list');
 }
