@@ -1,7 +1,4 @@
-A library for Dart developers.
-
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+# dart_strapi
 
 ## Usage
 
@@ -10,13 +7,20 @@ A simple usage example:
 ```dart
 import 'package:dart_strapi/dart_strapi.dart';
 
-main() {
-  var awesome = new Awesome();
+void main() async {
+  final strapiClient = Strapi.newClient();
+  strapiClient.initialize(token: 'token');
+
+  final records = await strapiClient.find('record', queryParameters: {
+    'amount_gt': 90,
+  });
+
+  final list = records.map((e) => e.toMap()).toList();
+
+  print('$list');
+
+  // using client directly - any other endpoint
+  final json = await strapiClient.http.get('/lines/count');
+  print('list#: $json');
 }
 ```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme

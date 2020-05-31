@@ -1,6 +1,6 @@
 name: dart_strapi
-description: A starting point for Dart libraries or applications.
-version: 0.0.2
+description: http client for strapi, you can access your models by name or the custom ones using the http client.
+version: 0.0.3
 homepage: https://github.com/xantiagoma/dart_strapi
 
 environment:

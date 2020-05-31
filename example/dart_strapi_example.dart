@@ -11,4 +11,8 @@ void main() async {
   final list = records.map((e) => e.toMap()).toList();
 
   print('$list');
+
+  // using client directly - any other endpoint
+  final json = await strapiClient.http.get('/lines/count');
+  print('list#: $json');
 }

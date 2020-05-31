@@ -26,6 +26,7 @@ class Strapi {
     String token = '',
   }) {
     _base_url = base_url;
+    _httpClient.options.baseUrl = base_url;
     _httpClient.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) async {
@@ -133,6 +134,8 @@ class Strapi {
       return ContentType.fromMap(contentType, data);
     });
   }
+
+  Dio get http => _httpClient;
 }
 
 class ContentType {
