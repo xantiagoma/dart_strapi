@@ -26,8 +26,7 @@ void main() async {
   //   {'id': 'lalala', 'title': 'lalala test'},
   //   options: Options(
   //     headers: {
-  //       'Authorization':
-  //           'Bearer token'
+  //       'Authorization': 'Bearer token',
   //     },
   //   ),
   // );
@@ -42,34 +41,31 @@ void main() async {
   //   ),
   //   options: Options(
   //     headers: {
-  //       'Authorization':
-  //           'Bearer token'
+  //       'Authorization': 'Bearer token',
   //     },
   //   ),
   // );
   // print(page);
 
-  // final page = await strapiClient.delete(
+  // final page = await strapiClient.remove(
   //   Entry(
   //     collectionName: 'pages',
   //     id: Identifier.string('607a5bffa8c1a80015805eec'),
   //   ),
   //   options: Options(
   //     headers: {
-  //       'Authorization':
-  //           'Bearer token'
+  //       'Authorization': 'Bearer token',
   //     },
   //   ),
   // );
   // print(page);
 
-  // final page = await strapiClient.deleteById(
+  // final page = await strapiClient.removeById(
   //   'pages',
   //   '607a5be6a8c1a80015805eeb',
   //   options: Options(
   //     headers: {
-  //       'Authorization':
-  //           'Bearer token'
+  //       'Authorization': 'Bearer token',
   //     },
   //   ),
   // );
@@ -85,4 +81,34 @@ void main() async {
   //   ),
   // );
   // print(page);
+  //
+
+  // final resp = await strapiClient.register(
+  //   'testing1',
+  //   'testing1@gmail.co',
+  //   'password123*',
+  // );
+
+  // final resp = await strapiClient.login(
+  //   'testing1',
+  //   'password123*',
+  // );
+
+  // final resp = await strapiClient.forgotPassword(
+  //   'testing1@gmail.co',
+  // );
+
+  // final resp = await strapiClient.me(
+  //   options: Options(
+  //     headers: {
+  //       'Authorization': 'Bearer token',
+  //     },
+  //   ),
+  // );
+
+  // print(resp);
+
+  // final labels = await strapiClient.get('labels');
+
+  // print(labels);
 }

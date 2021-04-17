@@ -41,7 +41,7 @@ import 'utils.dart';
 /// > See [qs library](https://github.com/ljharb/qs) This will give you full power to create complex queries with logical AND and OR operations.
 ///
 /// #### AND operator
-/// ```json
+/// ```dart
 /// const query = qs.stringify({
 ///   _where: [{ stars: 1 }, { pricing_lte: 20 }],
 /// });
@@ -53,7 +53,7 @@ import 'utils.dart';
 /// ```
 ///
 /// #### OR operator
-/// ```json
+/// ```dart
 /// const query = qs.stringify({ _where: { _or: [{ stars: 1 }, { pricing_gt: 30 }] } });
 /// // GET /restaurants?_where[_or][0][stars]=1&_where[_or][1][pricing_gt]=30
 /// const query = qs.stringify({ _where: { _or: [{ pricing_lt: 10 }, { pricing_gt: 30 }] } });
@@ -64,7 +64,7 @@ import 'utils.dart';
 /// ```
 ///
 /// #### AND and OR operators
-/// ```json
+/// ```dart
 /// const query = qs.stringify({
 ///   _where: {
 ///     _or: [
@@ -85,7 +85,25 @@ import 'utils.dart';
 /// });
 /// // GET /restaurants?_where[_or][0][0][stars]=2&_where[_or][0][1][pricing_lt]=80&_where[_or][1][0][stars]=1&_where[_or][1][1][categories.name]=French
 /// ```
+/// {@endtemplate}
 
+/// {@template authTokenUse}
+/// Token is not automatically set when [OkResponse] use
+/// ```dart
+/// strapiClient.token = data['jwt];
+/// ```
+/// to set it permanetly or attach with options on your request
+/// ```dart
+/// final page = await strapiClient.create(
+///   'pages',
+///   {'id': 'lalala', 'title': 'lalala test'},
+///   options: Options(
+///     headers: {
+///       'Authorization': 'Bearer token',
+///     },
+///   ),
+/// );
+/// ```
 /// {@endtemplate}
 
 /// Strapi Client
@@ -292,12 +310,12 @@ class Strapi {
   /// Collection Type - Delete a {content-type} entry
   ///
   /// {@macro queryParameters}
-  Future<models.Response<models.Entry>> delete(
+  Future<models.Response<models.Entry>> remove(
     models.Entry entry, {
     Map<String, dynamic> queryParameters = const {},
     Options? options,
   }) async {
-    return await deleteById(
+    return await removeById(
       entry.collectionName,
       entry.identifier,
       queryParameters: queryParameters,
@@ -308,7 +326,7 @@ class Strapi {
   /// Collection Type - Delete a {content-type} entry
   ///
   /// {@macro queryParameters}
-  Future<models.Response<models.Entry>> deleteById(
+  Future<models.Response<models.Entry>> removeById(
     String collectionName,
     String id, {
     Map<String, dynamic> queryParameters = const {},
@@ -384,7 +402,7 @@ class Strapi {
   }
 
   /// Single Type - Delete the {content-type} content
-  Future<models.Response<Object>> deletePage(
+  Future<models.Response<Object>> removePage(
     String collectionName, {
     Options? options,
   }) async {
@@ -397,6 +415,253 @@ class Strapi {
       return models.OkResponse(
         response.data,
       );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Local register
+  /// {@macro authTokenUse}
+  Future<models.Response<Object>> register(
+    String username,
+    String email,
+    String password, {
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/auth/local/register',
+        options: options,
+        data: {
+          'username': username,
+          'email': email,
+          'password': password,
+        },
+      );
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Local login
+  /// {@macro authTokenUse}
+  Future<models.Response<Object>> login(
+    String identifier,
+    String password, {
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/auth/local',
+        options: options,
+        data: {
+          'identifier': identifier,
+          'password': password,
+        },
+      );
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Local password recovery email
+  Future<models.Response<Object>> forgotPassword(
+    String email, {
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/auth/forgot-password',
+        options: options,
+        data: {
+          'email': email,
+        },
+      );
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Local password recovery with email code
+  Future<models.Response<Object>> resetPassword(
+    String code,
+    String password, {
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/auth/reset-password',
+        options: options,
+        data: {
+          'code': code,
+          'password': password,
+          'passwordConfirmation': password,
+        },
+      );
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Local resend email validation
+  Future<models.Response<Object>> sendEmailConfirmation(
+    String email, {
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/auth/send-email-confirmation',
+        options: options,
+        data: {
+          'email': email,
+        },
+      );
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Local resend email validation
+  Future<models.Response<Object>> me({
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.get(
+        '$base_url/users/me',
+        options: options,
+      );
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// HTTP Get to server
+  /// {@macro queryParameters}
+  Future<models.Response<Object>> get(
+    String path, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.get(
+        '$base_url/$path',
+        queryParameters: queryParameters,
+        options: options,
+      );
+
+      return models.OkResponse(response.data);
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// HTTP POST to server
+  /// {@macro queryParameters}
+  Future<models.Response<Object>> post(
+    String path, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+    dynamic data,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/$path',
+        queryParameters: queryParameters,
+        options: options,
+        data: data,
+      );
+
+      return models.OkResponse(response.data);
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// HTTP PUT to server
+  /// {@macro queryParameters}
+  Future<models.Response<Object>> put(
+    String path, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+    dynamic data,
+  }) async {
+    try {
+      final response = await _httpClient.put(
+        '$base_url/$path',
+        queryParameters: queryParameters,
+        options: options,
+        data: data,
+      );
+
+      return models.OkResponse(response.data);
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// HTTP DELETE to server
+  /// {@macro queryParameters}
+  Future<models.Response<Object>> delete(
+    String path, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+    dynamic data,
+  }) async {
+    try {
+      final response = await _httpClient.delete(
+        '$base_url/$path',
+        queryParameters: queryParameters,
+        options: options,
+        data: data,
+      );
+
+      return models.OkResponse(response.data);
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// HTTP PATCH to server
+  /// {@macro queryParameters}
+  Future<models.Response<Object>> patch(
+    String path, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+    dynamic data,
+  }) async {
+    try {
+      final response = await _httpClient.patch(
+        '$base_url/$path',
+        queryParameters: queryParameters,
+        options: options,
+        data: data,
+      );
+
+      return models.OkResponse(response.data);
     } catch (e) {
       return models.ErrorResponse(e.toString());
     }
