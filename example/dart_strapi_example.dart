@@ -1,18 +1,88 @@
 import 'package:dart_strapi/dart_strapi.dart';
 
 void main() async {
-  final strapiClient = Strapi.newClient();
-  strapiClient.initialize(token: 'token');
+  final strapiClient = Strapi(
+    'https://server.app',
+    // token: 'token',
+  );
 
-  final records = await strapiClient.find('record', queryParameters: {
-    'amount_gt': 90,
-  });
+  // strapiClient.token = 'token';
 
-  final list = records.map((e) => e.toMap()).toList();
+  // final records = await strapiClient.find('lines', queryParameters: {});
+  // print(records);
 
-  print('$list');
+  // final record =
+  //     await strapiClient.findOne('lines', '5e44abbb7764fe87bd959434');
+  // print(record);
 
-  // using client directly - any other endpoint
-  final json = await strapiClient.http.get('/lines/count');
-  print('list#: $json');
+  // final count = await strapiClient.count(
+  //   'lines',
+  //   queryParameters: {'color': '#0054A4'},
+  // );
+  // print(count);
+
+  // final page = await strapiClient.create(
+  //   'pages',
+  //   {'id': 'lalala', 'title': 'lalala test'},
+  //   options: Options(
+  //     headers: {
+  //       'Authorization':
+  //           'Bearer token'
+  //     },
+  //   ),
+  // );
+
+  // final page = await strapiClient.update(
+  //   Entry(
+  //     collectionName: 'pages',
+  //     id: Identifier.string('607a5dbea8c1a80015805eed'),
+  //     data: {
+  //       'title': 'lalaa test 2',
+  //     },
+  //   ),
+  //   options: Options(
+  //     headers: {
+  //       'Authorization':
+  //           'Bearer token'
+  //     },
+  //   ),
+  // );
+  // print(page);
+
+  // final page = await strapiClient.delete(
+  //   Entry(
+  //     collectionName: 'pages',
+  //     id: Identifier.string('607a5bffa8c1a80015805eec'),
+  //   ),
+  //   options: Options(
+  //     headers: {
+  //       'Authorization':
+  //           'Bearer token'
+  //     },
+  //   ),
+  // );
+  // print(page);
+
+  // final page = await strapiClient.deleteById(
+  //   'pages',
+  //   '607a5be6a8c1a80015805eeb',
+  //   options: Options(
+  //     headers: {
+  //       'Authorization':
+  //           'Bearer token'
+  //     },
+  //   ),
+  // );
+  // print(page);
+
+  // final page = await strapiClient.update(
+  //   Entry(
+  //     collectionName: 'pages',
+  //     id: Identifier.string('607a5852a8c1a80015805eea'),
+  //     data: {
+  //       'title': 'Ex3',
+  //     },
+  //   ),
+  // );
+  // print(page);
 }

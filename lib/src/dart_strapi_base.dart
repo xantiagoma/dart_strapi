@@ -1,213 +1,404 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:dart_strapi/src/utils/extends/functions.dart';
 
+import 'models/models.dart' as models;
+import 'utils.dart';
+
+/// {@template queryParameters}
+/// queryParameters can follow:
+/// ```json
+/// {
+///   "prop": "value",                   // Equal
+///   "prop_eq": "value",                // Equal
+///   "prop_ne": "string",               // Not equal
+///   "prop_lt": "string",               // Less than
+///   "prop_gt": "string",               // Greater than
+///   "prop_lte": "string",              // Less than or equal to
+///   "prop_gte": "string",              // Greater than or equal to
+///   "prop_in": "array[string]",        // Included in an array
+///   "prop_nin": "array[string]",       // Not included in an array
+///   "prop_contains": "string",         // Contains
+///   "prop_ncontains": "string",        // Doesn't contain
+///   "prop_containss": "string",        // Contains, case sensitive
+///   "prop_ncontainss": "string",       // Doesn't contain, case sensitive
+///   "prop_null": "string",             // Is null or not null
+///   "_sort": "string",
+///   // _sort=email:ASC / _sort=email:DESC / _sort=email:asc,dateField:desc
+///   "_limit": "integer",               // Default is 100 / -1 (full set)
+///   "_start": "integer",               //
+///   "_where": "integer",               //
+///   "prop.attrs.other_ac": "same",     // Deep filtering
+///   "_publicationState": "live or preview"
+///   // _publicationState=preview&published_at_null=true (just drafts)
+/// }
+/// ```
+///
+/// ### **_where** [complex queries](https://strapi.io/documentation/developer-docs/latest/developer-resources/content-api/content-api.html#complex-queries)
+/// * `GET /restaurants?_where[price_gte]=3`
+/// * `GET /restaurants?_where[0][price_gte]=3&[0][price_lte]=7`
+///
+/// > OR and AND operations are available starting from v3.1.0
+///
+/// > See [qs library](https://github.com/ljharb/qs) This will give you full power to create complex queries with logical AND and OR operations.
+///
+/// #### AND operator
+/// ```json
+/// const query = qs.stringify({
+///   _where: [{ stars: 1 }, { pricing_lte: 20 }],
+/// });
+/// // GET /restaurants?_where[0][stars]=1&_where[1][pricing_lte]=20
+/// const query = qs.stringify({
+///   _where: [{ pricing_gte: 20 }, { pricing_lte: 50 }],
+/// });
+/// // GET /restaurants?_where[0][pricing_gte]=20&_where[1][pricing_lte]=50
+/// ```
+///
+/// #### OR operator
+/// ```json
+/// const query = qs.stringify({ _where: { _or: [{ stars: 1 }, { pricing_gt: 30 }] } });
+/// // GET /restaurants?_where[_or][0][stars]=1&_where[_or][1][pricing_gt]=30
+/// const query = qs.stringify({ _where: { _or: [{ pricing_lt: 10 }, { pricing_gt: 30 }] } });
+/// // GET /restaurants?_where[_or][0][pricing_lt]=10&_where[_or][1][pricing_gt]=30
+///
+/// // The query engine implicitly uses the OR operation when you pass an array of values in an expression.
+/// // GET /restaurants?stars=1&stars=2
+/// ```
+///
+/// #### AND and OR operators
+/// ```json
+/// const query = qs.stringify({
+///   _where: {
+///     _or: [
+///       [{ stars: 2 }, { pricing_lt: 80 }], // implicit AND
+///       [{ stars: 1 }, { pricing_gte: 50 }], // implicit AND
+///     ],
+///   },
+/// });
+/// // GET /restaurants?_where[_or][0][0][stars]=2&_where[_or][0][1][pricing_lt]=80&_where[_or][1][0][stars]=1&_where[_or][1][1][pricing_gte]=50
+/// // ---------------------- deep filtering -----------------
+/// const query = qs.stringify({
+///   _where: {
+///     _or: [
+///       [{ stars: 2 }, { pricing_lt: 80 }], // implicit AND
+///       [{ stars: 1 }, { 'categories.name': 'French' }], // implicit AND
+///     ],
+///   },
+/// });
+/// // GET /restaurants?_where[_or][0][0][stars]=2&_where[_or][0][1][pricing_lt]=80&_where[_or][1][0][stars]=1&_where[_or][1][1][categories.name]=French
+/// ```
+
+/// {@endtemplate}
+
+/// Strapi Client
 class Strapi {
-  Strapi._constructor();
+  late final String base_url;
+  late final Dio _httpClient;
 
-  static final Strapi _instance = Strapi._constructor();
+  Dio get http => _httpClient;
 
-  static Strapi newClient() {
-    return Strapi._constructor();
-  }
-
-  factory Strapi() {
-    return _instance;
-  }
-
-  static Strapi get instance {
-    return _instance;
-  }
-
-  String _base_url;
-
-  void initialize({
-    String base_url = 'http://localhost:1337',
-    String token = '',
+  Strapi(
+    String base_url, {
+    Dio? httpClient,
+    String? token,
+    BaseOptions? options,
   }) {
-    _base_url = base_url;
-    _httpClient.options.baseUrl = base_url;
-    _httpClient.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (RequestOptions options) async {
-          if (token.isNotEmpty) {
-            options.headers.putIfAbsent('Authorization', () => 'Bearer $token');
-          }
-          return options;
-        },
-      ),
+    this.base_url = base_url.purgeEnd('/');
+    _httpClient = httpClient ?? Dio(options);
+    if (options != null) {
+      _httpClient.options = options;
+    }
+    _httpClient.options.baseUrl = this.base_url;
+    _httpClient.options.headers = {
+      for (final entry in _httpClient.options.headers.entries)
+        entry.key: entry.value,
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+  }
+
+  String? get token => _httpClient.options.headers['Authorization'];
+
+  set token(String? token) {
+    _httpClient.options.headers = {
+      for (final entry in _httpClient.options.headers.entries)
+        entry.key: entry.value,
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+  }
+
+  /// Collection Type - Get a list of {content-type} entries
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<List<models.Entry>>> find(
+    String collectionName, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.get(
+        '$base_url/$collectionName',
+        queryParameters: queryParameters,
+        options: options,
+      );
+      if (!(response.data is List)) {
+        throw 'Not list response';
+      }
+
+      final list = response.data as List<dynamic>;
+
+      final entries = list
+          .map(
+            (e) => models.Entry(
+              collectionName: collectionName,
+              id: e['_id'] is String
+                  ? models.Identifier.string(e['_id'])
+                  : models.Identifier.integer(e['_id']),
+              data: e,
+            ),
+          )
+          .toList();
+      return models.OkResponse(entries);
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Collection Type - Get a specific {content-type} entry
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<models.Entry>> findOne(
+    String collectionName,
+    String id, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.get(
+        '$base_url/$collectionName/$id',
+        queryParameters: queryParameters,
+        options: options,
+      );
+      if (!(response.data is Map)) {
+        throw 'Not map found';
+      }
+      return models.OkResponse(
+        models.Entry(
+          collectionName: collectionName,
+          id: models.Identifier.string(id),
+          data: response.data,
+        ),
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Collection Type - Count {content-type} entries
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<int>> count(
+    String collectionName, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.get(
+        '$base_url/$collectionName/count',
+        queryParameters: queryParameters,
+        options: options,
+      );
+      if (!(response.data is int)) {
+        throw 'No int count response';
+      }
+      return models.OkResponse(response.data);
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Collection Type - Create a {content-type} entry
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<models.Entry>> create(
+    String collectionName,
+    dynamic data, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.post(
+        '$base_url/$collectionName',
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+
+      if (!(response.data is Map)) {
+        throw 'Created data not map';
+      }
+
+      if (response.data['_id'] == null) {
+        throw 'Created null id';
+      }
+
+      final id = response.data['_id'] is String
+          ? models.StringIdentifier(response.data['_id'])
+          : models.IntIdentifier(response.data['_id']);
+
+      return models.OkResponse(
+        models.Entry(
+          collectionName: collectionName,
+          id: id,
+          data: response.data,
+        ),
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Collection Type - Update a {content-type} entry
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<models.Entry>> update(
+    models.Entry entry, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.put(
+        '$base_url/${entry.collectionName}/${entry.identifier}',
+        data: entry.data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+
+      if (!(response.data is Map)) {
+        throw 'Updated data not map';
+      }
+
+      if (response.data['_id'] == null) {
+        throw 'Updated null id';
+      }
+
+      return models.OkResponse(
+        entry.copyWith(
+          data: response.data,
+        ),
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
+  }
+
+  /// Collection Type - Delete a {content-type} entry
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<models.Entry>> delete(
+    models.Entry entry, {
+    Map<String, dynamic> queryParameters = const {},
+    Options? options,
+  }) async {
+    return await deleteById(
+      entry.collectionName,
+      entry.identifier,
+      queryParameters: queryParameters,
+      options: options,
     );
   }
 
-  final _httpClient = Dio();
-
-  /// ```json
-  /// {
-  ///   "prop": "value",
-  ///   "prop_limit": "integer",
-  ///   "prop_sort": "string",
-  ///   "prop_start": "integer",
-  ///   "prop_ne": "string",
-  ///   "prop_lt": "string",
-  ///   "prop_lte": "string",
-  ///   "prop_gt": "string",
-  ///   "prop_gte": "string",
-  ///   "prop_contains": "string",
-  ///   "prop_containss": "string",
-  ///   "prop_in": "array[string]",
-  ///   "prop_nin": "array[string]"
-  /// }
-  /// ```
-  Future<List<ContentType>> find(
-    String contentType, {
+  /// Collection Type - Delete a {content-type} entry
+  ///
+  /// {@macro queryParameters}
+  Future<models.Response<models.Entry>> deleteById(
+    String collectionName,
+    String id, {
     Map<String, dynamic> queryParameters = const {},
+    Options? options,
   }) async {
-    return await tryOrNullAsync(() async {
-      final response = await _httpClient.get(
-        '$_base_url/$contentType',
+    try {
+      final response = await _httpClient.delete(
+        '$base_url/$collectionName/$id',
         queryParameters: queryParameters,
+        options: options,
       );
-      final List<dynamic> list = response.data;
-      final parsed = list.map(
-        (item) => ContentType.fromMap(contentType, item),
+      return models.OkResponse(
+        models.Entry(
+          collectionName: collectionName,
+          id: models.Identifier.string(id),
+          data: response.data,
+        ),
       );
-      return parsed.toList();
-    });
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
   }
 
-  Future<ContentType> findOne(String contentType, String id) async {
-    return await tryOrNullAsync(() async {
-      final response = await _httpClient.get('$_base_url/$contentType/$id');
-      final Map<String, dynamic> data = response.data;
-      final parsed = ContentType.fromMap(contentType, data);
-      return parsed;
-    });
-  }
-
-  Future<int> count(String contentType) async {
-    return await tryOrNullAsync(() async {
-      final response = await _httpClient.get('$_base_url/$contentType/count');
-      final int data = response.data;
-      return data;
-    });
-  }
-
-  Future<ContentType> create(ContentType content) async {
-    return await tryOrNullAsync(() async {
-      final response = await _httpClient.post(
-        '$_base_url/${content.collectionName}',
-        data: content.toMap(),
+  /// Single Type - Get the {content-type} content
+  Future<models.Response<Object>> getPage(
+    String contentType, {
+    Options? options,
+  }) async {
+    try {
+      final response = await _httpClient.get(
+        '$base_url/$contentType',
+        options: options,
       );
-      final data = response.data;
-      return ContentType.fromMap(content.collectionName, data);
-    });
+
+      if (!(response.data is Map)) {
+        throw 'Not map found';
+      }
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
   }
 
-  Future<ContentType> update(ContentType content) async {
-    return await tryOrNullAsync(() async {
+  /// Single Type - Update the {content-type} content
+  Future<models.Response<Object>> updatePage(
+    String contentType, {
+    required dynamic data,
+    Options? options,
+  }) async {
+    try {
       final response = await _httpClient.put(
-        '$_base_url/${content.collectionName}/${content.id}',
-        data: content.toMap(),
+        '$base_url/$contentType',
+        data: data,
+        options: options,
       );
-      final data = response.data;
-      return ContentType.fromMap(content.collectionName, data);
-    });
+
+      if (!(response.data is Map)) {
+        throw 'Updated data not map';
+      }
+
+      if (response.data['_id'] == null) {
+        throw 'Updated null id';
+      }
+
+      return models.OkResponse(
+        response.data,
+      );
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
+    }
   }
 
-  Future<ContentType> delete(ContentType content) async {
-    return await tryOrNullAsync(() async {
+  /// Single Type - Delete the {content-type} content
+  Future<models.Response<Object>> deletePage(
+    String collectionName, {
+    Options? options,
+  }) async {
+    try {
       final response = await _httpClient.delete(
-        '$_base_url/${content.collectionName}/${content.id}',
-        data: content.toMap(),
-      );
-      final data = response.data;
-      return ContentType.fromMap(content.collectionName, data);
-    });
-  }
-
-  Future<ContentType> deleteById(String contentType, String id) async {
-    return await tryOrNullAsync(() async {
-      final response = await _httpClient.delete(
-        '$_base_url/$contentType/$id',
-      );
-      final data = response.data;
-      return ContentType.fromMap(contentType, data);
-    });
-  }
-
-  Dio get http => _httpClient;
-}
-
-class ContentType {
-  Map<String, dynamic> data;
-  String collectionName;
-
-  ContentType(this.collectionName, this.data);
-
-  dynamic get id => tryOrNull(
-        () => data['id'],
+        '$base_url/$collectionName',
+        options: options,
       );
 
-  DateTime get created_at => tryOrNull(
-        () => DateTime.parse(data['created_at']),
+      return models.OkResponse(
+        response.data,
       );
-
-  DateTime get updated_at => tryOrNull(
-        () => DateTime.parse(data['updated_at']),
-      );
-
-  factory ContentType.fromJson(
-    String collectionName,
-    String str,
-  ) =>
-      ContentType.fromMap(
-        collectionName,
-        json.decode(str),
-      );
-
-  factory ContentType.fromMap(
-    String collectionName,
-    Map<String, dynamic> json,
-  ) =>
-      ContentType(
-        collectionName,
-        json,
-      );
-
-  String toJson() => json.encode(toMap());
-
-  Map<String, dynamic> toMap() =>
-      Map.from(data)..putIfAbsent('_collection', () => collectionName);
-
-  @override
-  String toString() {
-    return '$runtimeType(${toJson()})';
-  }
-
-  Future<bool> restore() async {
-    final restore = await Strapi().findOne(collectionName, id);
-    if (restore == null) {
-      return false;
+    } catch (e) {
+      return models.ErrorResponse(e.toString());
     }
-    data = restore.data;
-    return true;
-  }
-
-  Future<bool> save() async {
-    final update = await Strapi().update(this);
-    if (restore == null) {
-      return false;
-    }
-    data = update.data;
-    return true;
-  }
-
-  Future<bool> delete() async {
-    final delete = await Strapi().delete(this);
-    if (restore == null) {
-      return false;
-    }
-    data = delete.data;
-    return true;
   }
 }

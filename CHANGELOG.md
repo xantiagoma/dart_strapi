@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.0
+
+- API rewrite
+- !! Compatibility break
+
 ## 0.0.3
 
 - Add httpClient access for custom endpoints
