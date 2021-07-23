@@ -1,6 +1,6 @@
 name: dart_strapi
 description: http client for strapi, you can access your models by name or the custom ones using the http client.
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/xantiagoma/dart_strapi
 
 environment:

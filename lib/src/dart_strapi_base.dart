@@ -166,9 +166,9 @@ class Strapi {
           .map(
             (e) => models.Entry(
               collectionName: collectionName,
-              id: e['_id'] is String
-                  ? models.Identifier.string(e['_id'])
-                  : models.Identifier.integer(e['_id']),
+              id: e['id'] is String
+                  ? models.Identifier.string(e['id'])
+                  : models.Identifier.integer(e['id']),
               data: e,
             ),
           )
@@ -253,13 +253,13 @@ class Strapi {
         throw 'Created data not map';
       }
 
-      if (response.data['_id'] == null) {
+      if (response.data['id'] == null) {
         throw 'Created null id';
       }
 
-      final id = response.data['_id'] is String
-          ? models.StringIdentifier(response.data['_id'])
-          : models.IntIdentifier(response.data['_id']);
+      final id = response.data['id'] is String
+          ? models.StringIdentifier(response.data['id'])
+          : models.IntIdentifier(response.data['id']);
 
       return models.OkResponse(
         models.Entry(
@@ -293,7 +293,7 @@ class Strapi {
         throw 'Updated data not map';
       }
 
-      if (response.data['_id'] == null) {
+      if (response.data['id'] == null) {
         throw 'Updated null id';
       }
 
@@ -389,7 +389,7 @@ class Strapi {
         throw 'Updated data not map';
       }
 
-      if (response.data['_id'] == null) {
+      if (response.data['id'] == null) {
         throw 'Updated null id';
       }
 

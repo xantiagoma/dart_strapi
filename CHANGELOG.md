@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.0
+
+- use `id` instead `_id` due to it's not used on postgres
+
 ## 1.1.0
 
 - rename `delete` to `remove`
