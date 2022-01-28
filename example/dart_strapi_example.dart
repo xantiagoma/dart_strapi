@@ -1,114 +1,71 @@
 import 'package:dart_strapi/dart_strapi.dart';
 
+final serverUrl = 'http://localhost:1337';
+final authToken = '<token>';
+final collection = '<collectionType>';
+final single = '<singleType>';
+
 void main() async {
-  final strapiClient = Strapi(
-    'https://server.app',
-    // token: 'token',
+  final client = Strapi(
+    serverUrl,
+    token: authToken,
   );
 
-  // strapiClient.token = 'token';
+  final singleResponse = await client.single.get(single);
+  print("Single Response: $singleResponse");
+  print("Data: ${singleResponse.item1}");
+  print("Meta: ${singleResponse.item2}");
+  print("\n----------------------------------------------------\n");
 
-  // final records = await strapiClient.find('lines', queryParameters: {});
-  // print(records);
+  final singleNotFoundResponse = await client.single.get("lalala");
+  print("Single Not Found Response: $singleNotFoundResponse"); // [null, null]
+  print("Data: ${singleNotFoundResponse.item1}"); // null
+  print("Meta: ${singleNotFoundResponse.item2}"); // null
+  print("\n----------------------------------------------------\n");
 
-  // final record =
-  //     await strapiClient.findOne('lines', '5e44abbb7764fe87bd959434');
-  // print(record);
+  final collectionResponse = await client.collection.get(collection);
+  print("Collection Response: $collectionResponse");
+  print("Data: ${collectionResponse.item1}");
+  print("Meta: ${collectionResponse.item2}");
+  print("\n----------------------------------------------------\n");
 
-  // final count = await strapiClient.count(
-  //   'lines',
-  //   queryParameters: {'color': '#0054A4'},
-  // );
-  // print(count);
+  final collectionNotFoundResponse = await client.collection.get('rarara');
+  print(
+      "Collection Not Found Response: $collectionNotFoundResponse"); // [null, null]
+  print("Data: ${collectionNotFoundResponse.item1}"); // null
+  print("Meta: ${collectionNotFoundResponse.item2}"); // null
+  print("\n----------------------------------------------------\n");
 
-  // final page = await strapiClient.create(
-  //   'pages',
-  //   {'id': 'lalala', 'title': 'lalala test'},
-  //   options: Options(
-  //     headers: {
-  //       'Authorization': 'Bearer token',
-  //     },
-  //   ),
-  // );
+  final collectionSingleResponse =
+      await client.collection.getOne(collection, 1);
+  print("Collection Single Response: $collectionSingleResponse");
+  print("Data: ${collectionSingleResponse.item1}");
+  print("Meta: ${collectionSingleResponse.item2}");
+  print("\n----------------------------------------------------\n");
 
-  // final page = await strapiClient.update(
-  //   Entry(
-  //     collectionName: 'pages',
-  //     id: Identifier.string('607a5dbea8c1a80015805eed'),
-  //     data: {
-  //       'title': 'lalaa test 2',
-  //     },
-  //   ),
-  //   options: Options(
-  //     headers: {
-  //       'Authorization': 'Bearer token',
-  //     },
-  //   ),
-  // );
-  // print(page);
+  final collectionSingleNotFoundResponse =
+      await client.collection.getOne("xaxaxa", 1);
+  print(
+      "Collection Single Not Found Response: $collectionSingleNotFoundResponse"); // [null, null]
+  print("Data: ${collectionSingleNotFoundResponse.item1}"); // null
+  print("Meta: ${collectionSingleNotFoundResponse.item2}"); // null
+  print("\n----------------------------------------------------\n");
 
-  // final page = await strapiClient.remove(
-  //   Entry(
-  //     collectionName: 'pages',
-  //     id: Identifier.string('607a5bffa8c1a80015805eec'),
-  //   ),
-  //   options: Options(
-  //     headers: {
-  //       'Authorization': 'Bearer token',
-  //     },
-  //   ),
-  // );
-  // print(page);
+  final resourceSingle = await client.resource.get(single);
+  print("Resource Single Response: $resourceSingle"); // Response<Data.single>
+  print("\n----------------------------------------------------\n");
 
-  // final page = await strapiClient.removeById(
-  //   'pages',
-  //   '607a5be6a8c1a80015805eeb',
-  //   options: Options(
-  //     headers: {
-  //       'Authorization': 'Bearer token',
-  //     },
-  //   ),
-  // );
-  // print(page);
+  final resourceCollection = await client.resource.get(collection);
+  print(
+      "Resource Collection Response: $resourceCollection"); // Response<Data.collection>
+  print("\n----------------------------------------------------\n");
 
-  // final page = await strapiClient.update(
-  //   Entry(
-  //     collectionName: 'pages',
-  //     id: Identifier.string('607a5852a8c1a80015805eea'),
-  //     data: {
-  //       'title': 'Ex3',
-  //     },
-  //   ),
-  // );
-  // print(page);
-  //
+  final resourceCollectionSingle = await client.resource.get("$collection/1");
+  print(
+      "Resource Collection Single Response: $resourceCollectionSingle"); // Response<Data.single>
+  print("\n----------------------------------------------------\n");
 
-  // final resp = await strapiClient.register(
-  //   'testing1',
-  //   'testing1@gmail.co',
-  //   'password123*',
-  // );
-
-  // final resp = await strapiClient.login(
-  //   'testing1',
-  //   'password123*',
-  // );
-
-  // final resp = await strapiClient.forgotPassword(
-  //   'testing1@gmail.co',
-  // );
-
-  // final resp = await strapiClient.me(
-  //   options: Options(
-  //     headers: {
-  //       'Authorization': 'Bearer token',
-  //     },
-  //   ),
-  // );
-
-  // print(resp);
-
-  // final labels = await strapiClient.get('labels');
-
-  // print(labels);
+  final resourceNoExists = await client.resource.get("lalala");
+  print("Resource Not Found Response: $resourceNoExists"); // Response.error
+  print("\n----------------------------------------------------\n");
 }

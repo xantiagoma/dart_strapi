@@ -1,16 +1,28 @@
-// import 'package:dart_strapi/dart_strapi.dart';
-// import 'package:test/test.dart';
+import 'package:dart_strapi/dart_strapi.dart';
+import 'package:test/test.dart';
 
-// void main() {
-//   group('A group of tests', () {
-//     Awesome awesome;
+final serverURl = "http://localhost:1337/";
 
-//     setUp(() {
-//       awesome = Awesome();
-//     });
+void main() {
+  group('Strapi Client', () {
+    test('Urls should match', () {
+      final client = Strapi(serverURl);
+      expect(client.baseUrl, serverURl);
+    });
 
-//     test('First Test', () {
-//       expect(awesome.isAwesome, isTrue);
-//     });
-//   });
-// }
+    test('Should add suffix if doesn\'t have one', () {
+      final client = Strapi(serverURl.replaceFirst('1337/', '1337'));
+      expect(client.baseUrl, serverURl);
+    });
+
+    test('Should add /api apiPath suffix', () {
+      final client = Strapi(serverURl);
+      expect(client.apiPath, 'api/');
+    });
+
+    test('Should get apiEndpint path', () {
+      final client = Strapi(serverURl);
+      expect(client.apiEndpoint, '${serverURl}api/');
+    });
+  });
+}

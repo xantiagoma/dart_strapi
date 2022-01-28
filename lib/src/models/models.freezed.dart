@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'models.dart';
 
@@ -12,20 +14,428 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-/// @nodoc
-class _$ResponseTearOff {
-  const _$ResponseTearOff();
+Data _$DataFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'single':
+      return SingleData.fromJson(json);
+    case 'collection':
+      return CollectionData.fromJson(json);
 
-  OkResponse<T> ok<T>(T data) {
-    return OkResponse<T>(
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'Data',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
+/// @nodoc
+class _$DataTearOff {
+  const _$DataTearOff();
+
+  SingleData single(Map<String, dynamic> data) {
+    return SingleData(
       data,
     );
   }
 
-  ErrorResponse<T> error<T>(String message) {
-    return ErrorResponse<T>(
+  CollectionData collection(List<Map<String, dynamic>> data) {
+    return CollectionData(
+      data,
+    );
+  }
+
+  Data fromJson(Map<String, Object?> json) {
+    return Data.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $Data = _$DataTearOff();
+
+/// @nodoc
+mixin _$Data {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> data) single,
+    required TResult Function(List<Map<String, dynamic>> data) collection,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> data)? single,
+    TResult Function(List<Map<String, dynamic>> data)? collection,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> data)? single,
+    TResult Function(List<Map<String, dynamic>> data)? collection,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(SingleData value) single,
+    required TResult Function(CollectionData value) collection,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(SingleData value)? single,
+    TResult Function(CollectionData value)? collection,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SingleData value)? single,
+    TResult Function(CollectionData value)? collection,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DataCopyWith<$Res> {
+  factory $DataCopyWith(Data value, $Res Function(Data) then) =
+      _$DataCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
+  _$DataCopyWithImpl(this._value, this._then);
+
+  final Data _value;
+  // ignore: unused_field
+  final $Res Function(Data) _then;
+}
+
+/// @nodoc
+abstract class $SingleDataCopyWith<$Res> {
+  factory $SingleDataCopyWith(
+          SingleData value, $Res Function(SingleData) then) =
+      _$SingleDataCopyWithImpl<$Res>;
+  $Res call({Map<String, dynamic> data});
+}
+
+/// @nodoc
+class _$SingleDataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
+    implements $SingleDataCopyWith<$Res> {
+  _$SingleDataCopyWithImpl(SingleData _value, $Res Function(SingleData) _then)
+      : super(_value, (v) => _then(v as SingleData));
+
+  @override
+  SingleData get _value => super._value as SingleData;
+
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(SingleData(
+      data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SingleData implements SingleData {
+  const _$SingleData(this.data, {String? $type}) : $type = $type ?? 'single';
+
+  factory _$SingleData.fromJson(Map<String, dynamic> json) =>
+      _$$SingleDataFromJson(json);
+
+  @override
+  final Map<String, dynamic> data;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'Data.single(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SingleData &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  @JsonKey(ignore: true)
+  @override
+  $SingleDataCopyWith<SingleData> get copyWith =>
+      _$SingleDataCopyWithImpl<SingleData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> data) single,
+    required TResult Function(List<Map<String, dynamic>> data) collection,
+  }) {
+    return single(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> data)? single,
+    TResult Function(List<Map<String, dynamic>> data)? collection,
+  }) {
+    return single?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> data)? single,
+    TResult Function(List<Map<String, dynamic>> data)? collection,
+    required TResult orElse(),
+  }) {
+    if (single != null) {
+      return single(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(SingleData value) single,
+    required TResult Function(CollectionData value) collection,
+  }) {
+    return single(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(SingleData value)? single,
+    TResult Function(CollectionData value)? collection,
+  }) {
+    return single?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SingleData value)? single,
+    TResult Function(CollectionData value)? collection,
+    required TResult orElse(),
+  }) {
+    if (single != null) {
+      return single(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SingleDataToJson(this);
+  }
+}
+
+abstract class SingleData implements Data {
+  const factory SingleData(Map<String, dynamic> data) = _$SingleData;
+
+  factory SingleData.fromJson(Map<String, dynamic> json) =
+      _$SingleData.fromJson;
+
+  Map<String, dynamic> get data;
+  @JsonKey(ignore: true)
+  $SingleDataCopyWith<SingleData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CollectionDataCopyWith<$Res> {
+  factory $CollectionDataCopyWith(
+          CollectionData value, $Res Function(CollectionData) then) =
+      _$CollectionDataCopyWithImpl<$Res>;
+  $Res call({List<Map<String, dynamic>> data});
+}
+
+/// @nodoc
+class _$CollectionDataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
+    implements $CollectionDataCopyWith<$Res> {
+  _$CollectionDataCopyWithImpl(
+      CollectionData _value, $Res Function(CollectionData) _then)
+      : super(_value, (v) => _then(v as CollectionData));
+
+  @override
+  CollectionData get _value => super._value as CollectionData;
+
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(CollectionData(
+      data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CollectionData implements CollectionData {
+  const _$CollectionData(this.data, {String? $type})
+      : $type = $type ?? 'collection';
+
+  factory _$CollectionData.fromJson(Map<String, dynamic> json) =>
+      _$$CollectionDataFromJson(json);
+
+  @override
+  final List<Map<String, dynamic>> data;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'Data.collection(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CollectionData &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  @JsonKey(ignore: true)
+  @override
+  $CollectionDataCopyWith<CollectionData> get copyWith =>
+      _$CollectionDataCopyWithImpl<CollectionData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> data) single,
+    required TResult Function(List<Map<String, dynamic>> data) collection,
+  }) {
+    return collection(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> data)? single,
+    TResult Function(List<Map<String, dynamic>> data)? collection,
+  }) {
+    return collection?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> data)? single,
+    TResult Function(List<Map<String, dynamic>> data)? collection,
+    required TResult orElse(),
+  }) {
+    if (collection != null) {
+      return collection(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(SingleData value) single,
+    required TResult Function(CollectionData value) collection,
+  }) {
+    return collection(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(SingleData value)? single,
+    TResult Function(CollectionData value)? collection,
+  }) {
+    return collection?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SingleData value)? single,
+    TResult Function(CollectionData value)? collection,
+    required TResult orElse(),
+  }) {
+    if (collection != null) {
+      return collection(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CollectionDataToJson(this);
+  }
+}
+
+abstract class CollectionData implements Data {
+  const factory CollectionData(List<Map<String, dynamic>> data) =
+      _$CollectionData;
+
+  factory CollectionData.fromJson(Map<String, dynamic> json) =
+      _$CollectionData.fromJson;
+
+  List<Map<String, dynamic>> get data;
+  @JsonKey(ignore: true)
+  $CollectionDataCopyWith<CollectionData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Response _$ResponseFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'default':
+      return ResponseData.fromJson(json);
+    case 'error':
+      return ResponseError.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'Response',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
+/// @nodoc
+class _$ResponseTearOff {
+  const _$ResponseTearOff();
+
+  ResponseData call({@DataConverter() Data? data, Meta? meta}) {
+    return ResponseData(
+      data: data,
+      meta: meta,
+    );
+  }
+
+  ResponseError error(String message) {
+    return ResponseError(
       message,
     );
+  }
+
+  Response fromJson(Map<String, Object?> json) {
+    return Response.fromJson(json);
   }
 }
 
@@ -33,189 +443,273 @@ class _$ResponseTearOff {
 const $Response = _$ResponseTearOff();
 
 /// @nodoc
-mixin _$Response<T> {
+mixin _$Response {
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(T data) ok,
+  TResult when<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta) $default, {
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T data)? ok,
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta)? $default, {
+    TResult Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta)? $default, {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(OkResponse<T> value) ok,
-    required TResult Function(ErrorResponse<T> value) error,
+  TResult map<TResult extends Object?>(
+    TResult Function(ResponseData value) $default, {
+    required TResult Function(ResponseError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(OkResponse<T> value)? ok,
-    TResult Function(ErrorResponse<T> value)? error,
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult Function(ResponseData value)? $default, {
+    TResult Function(ResponseError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(ResponseData value)? $default, {
+    TResult Function(ResponseError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ResponseCopyWith<T, $Res> {
-  factory $ResponseCopyWith(
-          Response<T> value, $Res Function(Response<T>) then) =
-      _$ResponseCopyWithImpl<T, $Res>;
+abstract class $ResponseCopyWith<$Res> {
+  factory $ResponseCopyWith(Response value, $Res Function(Response) then) =
+      _$ResponseCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ResponseCopyWithImpl<T, $Res> implements $ResponseCopyWith<T, $Res> {
+class _$ResponseCopyWithImpl<$Res> implements $ResponseCopyWith<$Res> {
   _$ResponseCopyWithImpl(this._value, this._then);
 
-  final Response<T> _value;
+  final Response _value;
   // ignore: unused_field
-  final $Res Function(Response<T>) _then;
+  final $Res Function(Response) _then;
 }
 
 /// @nodoc
-abstract class $OkResponseCopyWith<T, $Res> {
-  factory $OkResponseCopyWith(
-          OkResponse<T> value, $Res Function(OkResponse<T>) then) =
-      _$OkResponseCopyWithImpl<T, $Res>;
-  $Res call({T data});
+abstract class $ResponseDataCopyWith<$Res> {
+  factory $ResponseDataCopyWith(
+          ResponseData value, $Res Function(ResponseData) then) =
+      _$ResponseDataCopyWithImpl<$Res>;
+  $Res call({@DataConverter() Data? data, Meta? meta});
+
+  $DataCopyWith<$Res>? get data;
+  $MetaCopyWith<$Res>? get meta;
 }
 
 /// @nodoc
-class _$OkResponseCopyWithImpl<T, $Res> extends _$ResponseCopyWithImpl<T, $Res>
-    implements $OkResponseCopyWith<T, $Res> {
-  _$OkResponseCopyWithImpl(
-      OkResponse<T> _value, $Res Function(OkResponse<T>) _then)
-      : super(_value, (v) => _then(v as OkResponse<T>));
+class _$ResponseDataCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
+    implements $ResponseDataCopyWith<$Res> {
+  _$ResponseDataCopyWithImpl(
+      ResponseData _value, $Res Function(ResponseData) _then)
+      : super(_value, (v) => _then(v as ResponseData));
 
   @override
-  OkResponse<T> get _value => super._value as OkResponse<T>;
+  ResponseData get _value => super._value as ResponseData;
 
   @override
   $Res call({
     Object? data = freezed,
+    Object? meta = freezed,
   }) {
-    return _then(OkResponse<T>(
-      data == freezed
+    return _then(ResponseData(
+      data: data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as T,
+              as Data?,
+      meta: meta == freezed
+          ? _value.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as Meta?,
     ));
+  }
+
+  @override
+  $DataCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $DataCopyWith<$Res>(_value.data!, (value) {
+      return _then(_value.copyWith(data: value));
+    });
+  }
+
+  @override
+  $MetaCopyWith<$Res>? get meta {
+    if (_value.meta == null) {
+      return null;
+    }
+
+    return $MetaCopyWith<$Res>(_value.meta!, (value) {
+      return _then(_value.copyWith(meta: value));
+    });
   }
 }
 
 /// @nodoc
-class _$OkResponse<T> implements OkResponse<T> {
-  _$OkResponse(this.data);
+@JsonSerializable()
+class _$ResponseData implements ResponseData {
+  const _$ResponseData({@DataConverter() this.data, this.meta, String? $type})
+      : $type = $type ?? 'default';
+
+  factory _$ResponseData.fromJson(Map<String, dynamic> json) =>
+      _$$ResponseDataFromJson(json);
 
   @override
-  final T data;
+  @DataConverter()
+  final Data? data;
+  @override
+  final Meta? meta;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
-    return 'Response<$T>.ok(data: $data)';
+    return 'Response(data: $data, meta: $meta)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is OkResponse<T> &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
+        (other.runtimeType == runtimeType &&
+            other is ResponseData &&
+            const DeepCollectionEquality().equals(other.data, data) &&
+            const DeepCollectionEquality().equals(other.meta, meta));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(data),
+      const DeepCollectionEquality().hash(meta));
 
   @JsonKey(ignore: true)
   @override
-  $OkResponseCopyWith<T, OkResponse<T>> get copyWith =>
-      _$OkResponseCopyWithImpl<T, OkResponse<T>>(this, _$identity);
+  $ResponseDataCopyWith<ResponseData> get copyWith =>
+      _$ResponseDataCopyWithImpl<ResponseData>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(T data) ok,
+  TResult when<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta) $default, {
     required TResult Function(String message) error,
   }) {
-    return ok(data);
+    return $default(data, meta);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T data)? ok,
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta)? $default, {
+    TResult Function(String message)? error,
+  }) {
+    return $default?.call(data, meta);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta)? $default, {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (ok != null) {
-      return ok(data);
+    if ($default != null) {
+      return $default(data, meta);
     }
     return orElse();
   }
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(OkResponse<T> value) ok,
-    required TResult Function(ErrorResponse<T> value) error,
+  TResult map<TResult extends Object?>(
+    TResult Function(ResponseData value) $default, {
+    required TResult Function(ResponseError value) error,
   }) {
-    return ok(this);
+    return $default(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(OkResponse<T> value)? ok,
-    TResult Function(ErrorResponse<T> value)? error,
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult Function(ResponseData value)? $default, {
+    TResult Function(ResponseError value)? error,
+  }) {
+    return $default?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(ResponseData value)? $default, {
+    TResult Function(ResponseError value)? error,
     required TResult orElse(),
   }) {
-    if (ok != null) {
-      return ok(this);
+    if ($default != null) {
+      return $default(this);
     }
     return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ResponseDataToJson(this);
   }
 }
 
-abstract class OkResponse<T> implements Response<T> {
-  factory OkResponse(T data) = _$OkResponse<T>;
+abstract class ResponseData implements Response {
+  const factory ResponseData({@DataConverter() Data? data, Meta? meta}) =
+      _$ResponseData;
 
-  T get data => throw _privateConstructorUsedError;
+  factory ResponseData.fromJson(Map<String, dynamic> json) =
+      _$ResponseData.fromJson;
+
+  @DataConverter()
+  Data? get data;
+  Meta? get meta;
   @JsonKey(ignore: true)
-  $OkResponseCopyWith<T, OkResponse<T>> get copyWith =>
+  $ResponseDataCopyWith<ResponseData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ErrorResponseCopyWith<T, $Res> {
-  factory $ErrorResponseCopyWith(
-          ErrorResponse<T> value, $Res Function(ErrorResponse<T>) then) =
-      _$ErrorResponseCopyWithImpl<T, $Res>;
+abstract class $ResponseErrorCopyWith<$Res> {
+  factory $ResponseErrorCopyWith(
+          ResponseError value, $Res Function(ResponseError) then) =
+      _$ResponseErrorCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class _$ErrorResponseCopyWithImpl<T, $Res>
-    extends _$ResponseCopyWithImpl<T, $Res>
-    implements $ErrorResponseCopyWith<T, $Res> {
-  _$ErrorResponseCopyWithImpl(
-      ErrorResponse<T> _value, $Res Function(ErrorResponse<T>) _then)
-      : super(_value, (v) => _then(v as ErrorResponse<T>));
+class _$ResponseErrorCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
+    implements $ResponseErrorCopyWith<$Res> {
+  _$ResponseErrorCopyWithImpl(
+      ResponseError _value, $Res Function(ResponseError) _then)
+      : super(_value, (v) => _then(v as ResponseError));
 
   @override
-  ErrorResponse<T> get _value => super._value as ErrorResponse<T>;
+  ResponseError get _value => super._value as ResponseError;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(ErrorResponse<T>(
+    return _then(ResponseError(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -225,38 +719,46 @@ class _$ErrorResponseCopyWithImpl<T, $Res>
 }
 
 /// @nodoc
-class _$ErrorResponse<T> implements ErrorResponse<T> {
-  _$ErrorResponse(this.message);
+@JsonSerializable()
+class _$ResponseError implements ResponseError {
+  const _$ResponseError(this.message, {String? $type})
+      : $type = $type ?? 'error';
+
+  factory _$ResponseError.fromJson(Map<String, dynamic> json) =>
+      _$$ResponseErrorFromJson(json);
 
   @override
   final String message;
 
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
   @override
   String toString() {
-    return 'Response<$T>.error(message: $message)';
+    return 'Response.error(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ErrorResponse<T> &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is ResponseError &&
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
-  $ErrorResponseCopyWith<T, ErrorResponse<T>> get copyWith =>
-      _$ErrorResponseCopyWithImpl<T, ErrorResponse<T>>(this, _$identity);
+  $ResponseErrorCopyWith<ResponseError> get copyWith =>
+      _$ResponseErrorCopyWithImpl<ResponseError>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(T data) ok,
+  TResult when<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta) $default, {
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -264,8 +766,17 @@ class _$ErrorResponse<T> implements ErrorResponse<T> {
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T data)? ok,
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta)? $default, {
+    TResult Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(@DataConverter() Data? data, Meta? meta)? $default, {
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -277,18 +788,27 @@ class _$ErrorResponse<T> implements ErrorResponse<T> {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(OkResponse<T> value) ok,
-    required TResult Function(ErrorResponse<T> value) error,
+  TResult map<TResult extends Object?>(
+    TResult Function(ResponseData value) $default, {
+    required TResult Function(ResponseError value) error,
   }) {
     return error(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(OkResponse<T> value)? ok,
-    TResult Function(ErrorResponse<T> value)? error,
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult Function(ResponseData value)? $default, {
+    TResult Function(ResponseError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(ResponseData value)? $default, {
+    TResult Function(ResponseError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -296,542 +816,386 @@ class _$ErrorResponse<T> implements ErrorResponse<T> {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ResponseErrorToJson(this);
+  }
 }
 
-abstract class ErrorResponse<T> implements Response<T> {
-  factory ErrorResponse(String message) = _$ErrorResponse<T>;
+abstract class ResponseError implements Response {
+  const factory ResponseError(String message) = _$ResponseError;
 
-  String get message => throw _privateConstructorUsedError;
+  factory ResponseError.fromJson(Map<String, dynamic> json) =
+      _$ResponseError.fromJson;
+
+  String get message;
   @JsonKey(ignore: true)
-  $ErrorResponseCopyWith<T, ErrorResponse<T>> get copyWith =>
+  $ResponseErrorCopyWith<ResponseError> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-Entry _$EntryFromJson(Map<String, dynamic> json) {
-  return _Entry.fromJson(json);
+Meta _$MetaFromJson(Map<String, dynamic> json) {
+  return MetaData.fromJson(json);
 }
 
 /// @nodoc
-class _$EntryTearOff {
-  const _$EntryTearOff();
+class _$MetaTearOff {
+  const _$MetaTearOff();
 
-  _Entry call(
-      {required String collectionName, required Identifier id, Object? data}) {
-    return _Entry(
-      collectionName: collectionName,
-      id: id,
-      data: data,
+  MetaData call({Pagination? pagination}) {
+    return MetaData(
+      pagination: pagination,
     );
   }
 
-  Entry fromJson(Map<String, Object> json) {
-    return Entry.fromJson(json);
+  Meta fromJson(Map<String, Object?> json) {
+    return Meta.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Entry = _$EntryTearOff();
+const $Meta = _$MetaTearOff();
 
 /// @nodoc
-mixin _$Entry {
-  String get collectionName => throw _privateConstructorUsedError;
-  Identifier get id => throw _privateConstructorUsedError;
-  Object? get data => throw _privateConstructorUsedError;
+mixin _$Meta {
+  Pagination? get pagination => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $EntryCopyWith<Entry> get copyWith => throw _privateConstructorUsedError;
+  $MetaCopyWith<Meta> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EntryCopyWith<$Res> {
-  factory $EntryCopyWith(Entry value, $Res Function(Entry) then) =
-      _$EntryCopyWithImpl<$Res>;
-  $Res call({String collectionName, Identifier id, Object? data});
+abstract class $MetaCopyWith<$Res> {
+  factory $MetaCopyWith(Meta value, $Res Function(Meta) then) =
+      _$MetaCopyWithImpl<$Res>;
+  $Res call({Pagination? pagination});
 
-  $IdentifierCopyWith<$Res> get id;
+  $PaginationCopyWith<$Res>? get pagination;
 }
 
 /// @nodoc
-class _$EntryCopyWithImpl<$Res> implements $EntryCopyWith<$Res> {
-  _$EntryCopyWithImpl(this._value, this._then);
+class _$MetaCopyWithImpl<$Res> implements $MetaCopyWith<$Res> {
+  _$MetaCopyWithImpl(this._value, this._then);
 
-  final Entry _value;
+  final Meta _value;
   // ignore: unused_field
-  final $Res Function(Entry) _then;
+  final $Res Function(Meta) _then;
 
   @override
   $Res call({
-    Object? collectionName = freezed,
-    Object? id = freezed,
-    Object? data = freezed,
+    Object? pagination = freezed,
   }) {
     return _then(_value.copyWith(
-      collectionName: collectionName == freezed
-          ? _value.collectionName
-          : collectionName // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Identifier,
-      data: data == freezed ? _value.data : data,
+      pagination: pagination == freezed
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as Pagination?,
     ));
   }
 
   @override
-  $IdentifierCopyWith<$Res> get id {
-    return $IdentifierCopyWith<$Res>(_value.id, (value) {
-      return _then(_value.copyWith(id: value));
+  $PaginationCopyWith<$Res>? get pagination {
+    if (_value.pagination == null) {
+      return null;
+    }
+
+    return $PaginationCopyWith<$Res>(_value.pagination!, (value) {
+      return _then(_value.copyWith(pagination: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$EntryCopyWith<$Res> implements $EntryCopyWith<$Res> {
-  factory _$EntryCopyWith(_Entry value, $Res Function(_Entry) then) =
-      __$EntryCopyWithImpl<$Res>;
+abstract class $MetaDataCopyWith<$Res> implements $MetaCopyWith<$Res> {
+  factory $MetaDataCopyWith(MetaData value, $Res Function(MetaData) then) =
+      _$MetaDataCopyWithImpl<$Res>;
   @override
-  $Res call({String collectionName, Identifier id, Object? data});
+  $Res call({Pagination? pagination});
 
   @override
-  $IdentifierCopyWith<$Res> get id;
+  $PaginationCopyWith<$Res>? get pagination;
 }
 
 /// @nodoc
-class __$EntryCopyWithImpl<$Res> extends _$EntryCopyWithImpl<$Res>
-    implements _$EntryCopyWith<$Res> {
-  __$EntryCopyWithImpl(_Entry _value, $Res Function(_Entry) _then)
-      : super(_value, (v) => _then(v as _Entry));
+class _$MetaDataCopyWithImpl<$Res> extends _$MetaCopyWithImpl<$Res>
+    implements $MetaDataCopyWith<$Res> {
+  _$MetaDataCopyWithImpl(MetaData _value, $Res Function(MetaData) _then)
+      : super(_value, (v) => _then(v as MetaData));
 
   @override
-  _Entry get _value => super._value as _Entry;
+  MetaData get _value => super._value as MetaData;
 
   @override
   $Res call({
-    Object? collectionName = freezed,
-    Object? id = freezed,
-    Object? data = freezed,
+    Object? pagination = freezed,
   }) {
-    return _then(_Entry(
-      collectionName: collectionName == freezed
-          ? _value.collectionName
-          : collectionName // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Identifier,
-      data: data == freezed ? _value.data : data,
+    return _then(MetaData(
+      pagination: pagination == freezed
+          ? _value.pagination
+          : pagination // ignore: cast_nullable_to_non_nullable
+              as Pagination?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
-class _$_Entry implements _Entry {
-  _$_Entry({required this.collectionName, required this.id, this.data});
+@JsonSerializable()
+class _$MetaData implements MetaData {
+  const _$MetaData({this.pagination});
 
-  factory _$_Entry.fromJson(Map<String, dynamic> json) =>
-      _$_$_EntryFromJson(json);
+  factory _$MetaData.fromJson(Map<String, dynamic> json) =>
+      _$$MetaDataFromJson(json);
 
   @override
-  final String collectionName;
-  @override
-  final Identifier id;
-  @override
-  final Object? data;
+  final Pagination? pagination;
 
   @override
   String toString() {
-    return 'Entry(collectionName: $collectionName, id: $id, data: $data)';
+    return 'Meta(pagination: $pagination)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Entry &&
-            (identical(other.collectionName, collectionName) ||
-                const DeepCollectionEquality()
-                    .equals(other.collectionName, collectionName)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
+        (other.runtimeType == runtimeType &&
+            other is MetaData &&
+            const DeepCollectionEquality()
+                .equals(other.pagination, pagination));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(collectionName) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(data);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(pagination));
 
   @JsonKey(ignore: true)
   @override
-  _$EntryCopyWith<_Entry> get copyWith =>
-      __$EntryCopyWithImpl<_Entry>(this, _$identity);
+  $MetaDataCopyWith<MetaData> get copyWith =>
+      _$MetaDataCopyWithImpl<MetaData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_EntryToJson(this);
+    return _$$MetaDataToJson(this);
   }
 }
 
-abstract class _Entry implements Entry {
-  factory _Entry(
-      {required String collectionName,
-      required Identifier id,
-      Object? data}) = _$_Entry;
+abstract class MetaData implements Meta {
+  const factory MetaData({Pagination? pagination}) = _$MetaData;
 
-  factory _Entry.fromJson(Map<String, dynamic> json) = _$_Entry.fromJson;
+  factory MetaData.fromJson(Map<String, dynamic> json) = _$MetaData.fromJson;
 
   @override
-  String get collectionName => throw _privateConstructorUsedError;
-  @override
-  Identifier get id => throw _privateConstructorUsedError;
-  @override
-  Object? get data => throw _privateConstructorUsedError;
+  Pagination? get pagination;
   @override
   @JsonKey(ignore: true)
-  _$EntryCopyWith<_Entry> get copyWith => throw _privateConstructorUsedError;
+  $MetaDataCopyWith<MetaData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
-Identifier _$IdentifierFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType'] as String) {
-    case 'integer':
-      return IntIdentifier.fromJson(json);
-    case 'string':
-      return StringIdentifier.fromJson(json);
-
-    default:
-      throw FallThroughError();
-  }
+Pagination _$PaginationFromJson(Map<String, dynamic> json) {
+  return PaginationData.fromJson(json);
 }
 
 /// @nodoc
-class _$IdentifierTearOff {
-  const _$IdentifierTearOff();
+class _$PaginationTearOff {
+  const _$PaginationTearOff();
 
-  IntIdentifier integer(int id) {
-    return IntIdentifier(
-      id,
+  PaginationData call({int? page, int? pageSize, int? pageCount, int? total}) {
+    return PaginationData(
+      page: page,
+      pageSize: pageSize,
+      pageCount: pageCount,
+      total: total,
     );
   }
 
-  StringIdentifier string(String id) {
-    return StringIdentifier(
-      id,
-    );
-  }
-
-  Identifier fromJson(Map<String, Object> json) {
-    return Identifier.fromJson(json);
+  Pagination fromJson(Map<String, Object?> json) {
+    return Pagination.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Identifier = _$IdentifierTearOff();
+const $Pagination = _$PaginationTearOff();
 
 /// @nodoc
-mixin _$Identifier {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int id) integer,
-    required TResult Function(String id) string,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? integer,
-    TResult Function(String id)? string,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(IntIdentifier value) integer,
-    required TResult Function(StringIdentifier value) string,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(IntIdentifier value)? integer,
-    TResult Function(StringIdentifier value)? string,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+mixin _$Pagination {
+  int? get page => throw _privateConstructorUsedError;
+  int? get pageSize => throw _privateConstructorUsedError;
+  int? get pageCount => throw _privateConstructorUsedError;
+  int? get total => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $IdentifierCopyWith<$Res> {
-  factory $IdentifierCopyWith(
-          Identifier value, $Res Function(Identifier) then) =
-      _$IdentifierCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$IdentifierCopyWithImpl<$Res> implements $IdentifierCopyWith<$Res> {
-  _$IdentifierCopyWithImpl(this._value, this._then);
-
-  final Identifier _value;
-  // ignore: unused_field
-  final $Res Function(Identifier) _then;
-}
-
-/// @nodoc
-abstract class $IntIdentifierCopyWith<$Res> {
-  factory $IntIdentifierCopyWith(
-          IntIdentifier value, $Res Function(IntIdentifier) then) =
-      _$IntIdentifierCopyWithImpl<$Res>;
-  $Res call({int id});
-}
-
-/// @nodoc
-class _$IntIdentifierCopyWithImpl<$Res> extends _$IdentifierCopyWithImpl<$Res>
-    implements $IntIdentifierCopyWith<$Res> {
-  _$IntIdentifierCopyWithImpl(
-      IntIdentifier _value, $Res Function(IntIdentifier) _then)
-      : super(_value, (v) => _then(v as IntIdentifier));
-
-  @override
-  IntIdentifier get _value => super._value as IntIdentifier;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-  }) {
-    return _then(IntIdentifier(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-@JsonSerializable()
-
-/// @nodoc
-class _$IntIdentifier implements IntIdentifier {
-  _$IntIdentifier(this.id);
-
-  factory _$IntIdentifier.fromJson(Map<String, dynamic> json) =>
-      _$_$IntIdentifierFromJson(json);
-
-  @override
-  final int id;
-
-  @override
-  String toString() {
-    return 'Identifier.integer(id: $id)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is IntIdentifier &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
-
   @JsonKey(ignore: true)
-  @override
-  $IntIdentifierCopyWith<IntIdentifier> get copyWith =>
-      _$IntIdentifierCopyWithImpl<IntIdentifier>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int id) integer,
-    required TResult Function(String id) string,
-  }) {
-    return integer(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? integer,
-    TResult Function(String id)? string,
-    required TResult orElse(),
-  }) {
-    if (integer != null) {
-      return integer(id);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(IntIdentifier value) integer,
-    required TResult Function(StringIdentifier value) string,
-  }) {
-    return integer(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(IntIdentifier value)? integer,
-    TResult Function(StringIdentifier value)? string,
-    required TResult orElse(),
-  }) {
-    if (integer != null) {
-      return integer(this);
-    }
-    return orElse();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$IntIdentifierToJson(this)..['runtimeType'] = 'integer';
-  }
-}
-
-abstract class IntIdentifier implements Identifier {
-  factory IntIdentifier(int id) = _$IntIdentifier;
-
-  factory IntIdentifier.fromJson(Map<String, dynamic> json) =
-      _$IntIdentifier.fromJson;
-
-  int get id => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $IntIdentifierCopyWith<IntIdentifier> get copyWith =>
+  $PaginationCopyWith<Pagination> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StringIdentifierCopyWith<$Res> {
-  factory $StringIdentifierCopyWith(
-          StringIdentifier value, $Res Function(StringIdentifier) then) =
-      _$StringIdentifierCopyWithImpl<$Res>;
-  $Res call({String id});
+abstract class $PaginationCopyWith<$Res> {
+  factory $PaginationCopyWith(
+          Pagination value, $Res Function(Pagination) then) =
+      _$PaginationCopyWithImpl<$Res>;
+  $Res call({int? page, int? pageSize, int? pageCount, int? total});
 }
 
 /// @nodoc
-class _$StringIdentifierCopyWithImpl<$Res>
-    extends _$IdentifierCopyWithImpl<$Res>
-    implements $StringIdentifierCopyWith<$Res> {
-  _$StringIdentifierCopyWithImpl(
-      StringIdentifier _value, $Res Function(StringIdentifier) _then)
-      : super(_value, (v) => _then(v as StringIdentifier));
+class _$PaginationCopyWithImpl<$Res> implements $PaginationCopyWith<$Res> {
+  _$PaginationCopyWithImpl(this._value, this._then);
 
-  @override
-  StringIdentifier get _value => super._value as StringIdentifier;
+  final Pagination _value;
+  // ignore: unused_field
+  final $Res Function(Pagination) _then;
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? page = freezed,
+    Object? pageSize = freezed,
+    Object? pageCount = freezed,
+    Object? total = freezed,
   }) {
-    return _then(StringIdentifier(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_value.copyWith(
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pageSize: pageSize == freezed
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pageCount: pageCount == freezed
+          ? _value.pageCount
+          : pageCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      total: total == freezed
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
 
-@JsonSerializable()
+/// @nodoc
+abstract class $PaginationDataCopyWith<$Res>
+    implements $PaginationCopyWith<$Res> {
+  factory $PaginationDataCopyWith(
+          PaginationData value, $Res Function(PaginationData) then) =
+      _$PaginationDataCopyWithImpl<$Res>;
+  @override
+  $Res call({int? page, int? pageSize, int? pageCount, int? total});
+}
 
 /// @nodoc
-class _$StringIdentifier implements StringIdentifier {
-  _$StringIdentifier(this.id);
-
-  factory _$StringIdentifier.fromJson(Map<String, dynamic> json) =>
-      _$_$StringIdentifierFromJson(json);
+class _$PaginationDataCopyWithImpl<$Res> extends _$PaginationCopyWithImpl<$Res>
+    implements $PaginationDataCopyWith<$Res> {
+  _$PaginationDataCopyWithImpl(
+      PaginationData _value, $Res Function(PaginationData) _then)
+      : super(_value, (v) => _then(v as PaginationData));
 
   @override
-  final String id;
+  PaginationData get _value => super._value as PaginationData;
+
+  @override
+  $Res call({
+    Object? page = freezed,
+    Object? pageSize = freezed,
+    Object? pageCount = freezed,
+    Object? total = freezed,
+  }) {
+    return _then(PaginationData(
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pageSize: pageSize == freezed
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pageCount: pageCount == freezed
+          ? _value.pageCount
+          : pageCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      total: total == freezed
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PaginationData implements PaginationData {
+  const _$PaginationData(
+      {this.page, this.pageSize, this.pageCount, this.total});
+
+  factory _$PaginationData.fromJson(Map<String, dynamic> json) =>
+      _$$PaginationDataFromJson(json);
+
+  @override
+  final int? page;
+  @override
+  final int? pageSize;
+  @override
+  final int? pageCount;
+  @override
+  final int? total;
 
   @override
   String toString() {
-    return 'Identifier.string(id: $id)';
+    return 'Pagination(page: $page, pageSize: $pageSize, pageCount: $pageCount, total: $total)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is StringIdentifier &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)));
+        (other.runtimeType == runtimeType &&
+            other is PaginationData &&
+            const DeepCollectionEquality().equals(other.page, page) &&
+            const DeepCollectionEquality().equals(other.pageSize, pageSize) &&
+            const DeepCollectionEquality().equals(other.pageCount, pageCount) &&
+            const DeepCollectionEquality().equals(other.total, total));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(page),
+      const DeepCollectionEquality().hash(pageSize),
+      const DeepCollectionEquality().hash(pageCount),
+      const DeepCollectionEquality().hash(total));
 
   @JsonKey(ignore: true)
   @override
-  $StringIdentifierCopyWith<StringIdentifier> get copyWith =>
-      _$StringIdentifierCopyWithImpl<StringIdentifier>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int id) integer,
-    required TResult Function(String id) string,
-  }) {
-    return string(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? integer,
-    TResult Function(String id)? string,
-    required TResult orElse(),
-  }) {
-    if (string != null) {
-      return string(id);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(IntIdentifier value) integer,
-    required TResult Function(StringIdentifier value) string,
-  }) {
-    return string(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(IntIdentifier value)? integer,
-    TResult Function(StringIdentifier value)? string,
-    required TResult orElse(),
-  }) {
-    if (string != null) {
-      return string(this);
-    }
-    return orElse();
-  }
+  $PaginationDataCopyWith<PaginationData> get copyWith =>
+      _$PaginationDataCopyWithImpl<PaginationData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$StringIdentifierToJson(this)..['runtimeType'] = 'string';
+    return _$$PaginationDataToJson(this);
   }
 }
 
-abstract class StringIdentifier implements Identifier {
-  factory StringIdentifier(String id) = _$StringIdentifier;
+abstract class PaginationData implements Pagination {
+  const factory PaginationData(
+      {int? page,
+      int? pageSize,
+      int? pageCount,
+      int? total}) = _$PaginationData;
 
-  factory StringIdentifier.fromJson(Map<String, dynamic> json) =
-      _$StringIdentifier.fromJson;
+  factory PaginationData.fromJson(Map<String, dynamic> json) =
+      _$PaginationData.fromJson;
 
-  String get id => throw _privateConstructorUsedError;
+  @override
+  int? get page;
+  @override
+  int? get pageSize;
+  @override
+  int? get pageCount;
+  @override
+  int? get total;
+  @override
   @JsonKey(ignore: true)
-  $StringIdentifierCopyWith<StringIdentifier> get copyWith =>
+  $PaginationDataCopyWith<PaginationData> get copyWith =>
       throw _privateConstructorUsedError;
 }

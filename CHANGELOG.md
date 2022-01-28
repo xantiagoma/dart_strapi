@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.0
+
+- !! Compatibility break
+- Library for Strapi V4 for V3 check v1.2.0
+
 ## 1.2.0
 
 - use `id` instead `_id` due to it's not used on postgres
